@@ -4,6 +4,7 @@ import "angular-material";
 import "@uirouter/angularjs";
 
 import "./app";
+import "./routes";
 import "./module";
 import "./styles/index.scss";
 import "./styles/index.less";

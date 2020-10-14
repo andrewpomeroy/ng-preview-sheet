@@ -1,0 +1,27 @@
+<md-dialog class="mdDialog mdDialog--medium mdDialog--fullscreenScroll">
+  <md-toolbar>
+    <div class="md-toolbar-tools mdDialog-headerItems">
+      <span>Dialog</span>
+      <span flex="fill"></span>
+      <md-button class="md-icon-button" ng-click="$ctrl.cancel($event)">
+        <md-icon aria-label="Close dialog">
+          <!-- <img src="Content/images/svg/x.svg" class="icon" wnd-svg-injector /> -->
+          &times;
+        </md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <!-- <div class="mdDialog-body mdDialog-body--scroll"> -->
+  <div class="mdDialog-body">
+    <div class="mdDialog-body-segment mdDialog-body-segment--padded">
+      <p class="AppForm-text">
+        Your signature on the following forms has been received:
+      </p>
+    </div>
+  </div>
+  <div class="Dashboard-actionBar">
+    <div class="Dashboard-action">
+      <button class="btn btn-default" ng-click="$ctrl.cancel()">Close</button>
+    </div>
+  </div>
+</md-dialog>

@@ -11,13 +11,3 @@ angular.module("app").config(["$locationProvider",
 		});
 	}
 ]);
-
-angular.module("app").config(["$stateProvider",
-	function ($stateProvider) {
-		$stateProvider.state({
-			name: "root",
-			url: "/",
-			template: "<test-component prop=\"person\"></test-component>"
-		});
-	}
-]);
