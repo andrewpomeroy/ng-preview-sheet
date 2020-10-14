@@ -4,7 +4,9 @@ const previewSheet = {
 	bindings: {
 		itemId: "<",
 	},
-	template: "<div>{{$ctrl.itemId}} hellooooooo</div>",
+	require: {
+		previewContext: "?^",
+	},
 	controller: PreviewSheetCtrl
 }
 
@@ -39,11 +41,8 @@ const previewSheet = {
 						// openEvent
 					) {
 						var $ctrl = this;
-
 						$ctrl.itemId = itemId;
-
 						$ctrl.cancel = function() {
-							console.log($state.get('^'));
 							$mdDialog.cancel();
 						}
 					},
@@ -53,7 +52,6 @@ const previewSheet = {
 				focusOnOpen: true,
 				fullscreen: true,
 				multiple: true,
-				// template: vroot + "Template/Index?name=Signatures/signature-confirmation",
 				template,
 				locals: {
 					itemId: $ctrl.itemId,

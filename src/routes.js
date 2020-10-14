@@ -3,7 +3,7 @@ angular.module("app").config(["$stateProvider",
 		$stateProvider.state({
 			name: "root",
 			url: "/",
-			template: '<button ui-sref=".preview({previewItemId: 4})">Go to dialog</button><div ui-view></div>'
+			template: '<button ui-sref=".preview({previewItemId: 4})">Preview</button><div ui-view></div>'
 		});
     $stateProvider.state({
 			name: "root.preview",
