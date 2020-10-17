@@ -1,4 +1,5 @@
 import template from "./preview-sheet.html";
+import outerTemplate from "./preview-sheet-outer.html";
 
 const previewSheet = {
 	bindings: {
@@ -8,12 +9,13 @@ const previewSheet = {
 	require: {
 		previewContext: "?^",
 	},
-	controller: PreviewSheetCtrl
+	controller: PreviewSheetCtrl,
+	// transclude: true
 };
 
-PreviewSheetCtrl.$inject = ["$scope", "$attrs", "$state", "$timeout", "$window", "$mdDialog"];
+PreviewSheetCtrl.$inject = ["$scope", "$element", "$attrs", "$state", "$timeout", "$window", "$mdDialog", "$compile", "$transclude", "$mdCompiler"];
 
-function PreviewSheetCtrl($scope, $attrs, $state, $timeout, $window, $mdDialog) {
+function PreviewSheetCtrl($scope, $element, $attrs, $state, $timeout, $window, $mdDialog, $compile, $transclude, $mdCompiler) {
 	var $ctrl = this;
 
 	$ctrl.cancel = function () {
@@ -28,11 +30,27 @@ function PreviewSheetCtrl($scope, $attrs, $state, $timeout, $window, $mdDialog) 
 		$mdDialog.hide("destroyed");
 	};
 
+	$ctrl.test = "outer test";
+
+	$ctrl.link = $compile($element.children(0));
+	console.log($element);
+
 	$ctrl.$postLink = function () {
 		// Default clickOutsideToClose to true
 		if (!$attrs.clickOutsideToClose) {
 			$ctrl.clickOutsideToClose = true;
 		}
+
+		// $transclude(function (clone, scope) {
+		// 	// $mdCompiler.compile({
+		// 	// 	contentElement: clone
+		// 	// }).then(function (compileData) {
+		// 	// 	$ctrl.innerTemplate = compileData.element; // Content Element (same as above)
+		// 	// 	// console.log(compileData.link); // This does nothing when using a contentElement.
+		// 	// });
+		// 	$ctrl.innerTemplate = clone;
+		// });
+
 	};
 
 	$scope.$watch("$ctrl.itemId", function (newValue, oldValue) {
@@ -40,15 +58,24 @@ function PreviewSheetCtrl($scope, $attrs, $state, $timeout, $window, $mdDialog) 
 		$mdDialog.show({
 			parent: $window.angular.element(document.body),
 			controller: [
+				"$scope",
+				"$compile",
 				"$mdDialog",
+				"$element",
 				"clickOutsideToClose",
 				"itemId",
+				// "innerTemplate",
+				"link",
 				"$state",
 				// "openEvent",
 				function PreviewSheetInnerCtrl(
+					$scope,
+					$compile,
 					$mdDialog,
+					$element,
 					clickOutsideToClose,
 					itemId,
+					link,
 					$state
 					// openEvent
 				) {
@@ -64,6 +91,14 @@ function PreviewSheetCtrl($scope, $attrs, $state, $timeout, $window, $mdDialog) 
 						$ctrl.cancel();
 					};
 
+					$ctrl.test = "inner test";
+
+					$ctrl.$onInit = function () {
+						var target = $element.find("transclude-target");
+						target.append(link($scope));
+					};
+
+
 				},
 			],
 			bindToController: true,
@@ -71,16 +106,20 @@ function PreviewSheetCtrl($scope, $attrs, $state, $timeout, $window, $mdDialog) 
 			focusOnOpen: true,
 			fullscreen: true,
 			multiple: true,
-			template,
+			// contentElement: $ctrl.innerTemplate,
+			template: template,
+			// transclude: true,
 			locals: {
 				itemId: $ctrl.itemId,
-				clickOutsideToClose: $ctrl.clickOutsideToClose
+				clickOutsideToClose: $ctrl.clickOutsideToClose,
+				innerTemplate: $ctrl.innerTemplate,
+				link: $ctrl.link,
 				// openEvent: $ctrl.openEvent,
 			},
 			// onRemoving: function () {
 			// 	$ctrl.openEvent.target.focus();
 			// },
-		})
+		})	
 			.then(function (result) {
 				console.log("result", result);
 				// $ctrl.onClose(result);

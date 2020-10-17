@@ -1069,7 +1069,15 @@ function PermitsService ($q) {
 	}
 
 	function getPermitById (id) {
-		getFakePermits().find(x => x.id === id)
+		var deferred = $q.defer();
+
+		setTimeout(function () {
+			deferred.resolve(getFakePermits().find(x => x.id === id));
+		}, 1000);
+
+		return deferred.promise;
+
+		
 	}
 
 	return {

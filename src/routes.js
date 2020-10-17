@@ -28,11 +28,17 @@ angular.module("app").config(["$stateProvider",
 		$stateProvider.state({
 			name: "root.permits.preview",
 			url: "^/preview/:previewItemId",
-			component: "previewSheet",
+			// component: "previewSheet",
+			template: "<preview-sheet><div>{{$ctrl.test}}</div></preview-sheet>",
 			resolve: {
 				itemId: ["$transition$", function ($transition$) {
 					return $transition$.params().previewItemId;
-				}]
+				}],
+				previewItem: ["$transition$", "PermitsService", function ($transition$, PermitsService) {
+					console.log($transition$.params().previewItemId);
+					console.log(PermitsService.getPermitById($transition$.params().previewItemId));
+					return PermitsService.getPermitById($transition$.params().previewItemId);
+				}],
 			}
 		});
 	}
