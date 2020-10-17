@@ -1,10 +1,14 @@
 <md-dialog class="mdDialog mdDialog--medium mdDialog--fullscreenScroll">
   <div
     class="mdDialog--fullscreenScroll-container"
-    ng-click="$ctrl.handleOutsideClick($event)"
+    ng-click="$previewSheetCtrl.handleOutsideClick($event)"
     tabindex="-1"
   >
-    <div class="mdDialog--fullscreenScroll-content">
+    <div
+      class="mdDialog--fullscreenScroll-content"
+      ng-click="$previewSheetCtrl.stopProp($event)"
+      tabindex="-1"
+    >
       <transclude-target></transclude-target>
     </div>
   </div>

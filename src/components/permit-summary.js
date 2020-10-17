@@ -2,14 +2,14 @@ import template from "./permit-summary.html";
 
 const permitSummary = {
 	bindings: {
-		// itemId: "<",
+		itemId: "<",
+		previewItem: "<"
 		// clickOutsideToClose: "<"
 	},
 	require: {
 		// previewContext: "?^",
 	},
 	template: template
-	// controller: PermitSummaryCtrl
 };
 
 PermitSummaryCtrl.$inject = [];

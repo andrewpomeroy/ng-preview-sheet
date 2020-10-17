@@ -28,8 +28,7 @@ angular.module("app").config(["$stateProvider",
 		$stateProvider.state({
 			name: "root.permits.preview",
 			url: "^/preview/:previewItemId",
-			// component: "previewSheet",
-			template: "<preview-sheet><div>{{$ctrl.test}}</div></preview-sheet>",
+			component: "permitSummary",
 			resolve: {
 				itemId: ["$transition$", function ($transition$) {
 					return $transition$.params().previewItemId;
