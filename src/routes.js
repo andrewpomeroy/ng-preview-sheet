@@ -13,8 +13,17 @@ angular.module("app").config(["$stateProvider",
 		$stateProvider.state({
 			name: "root.permits",
 			url: "^/permits",
+			// component: "permitPreviewList",
 			template: permitsTemplate,
-			controller: permitsController
+			controller: permitsController,
+			resolve: {
+				allPermits: ["PermitsService", function (PermitsService) {
+					return PermitsService.getList();
+				}],
+				getPermitById: ["PermitsService", function (PermitsService) {
+					return PermitsService.getPermitById();
+				}]
+			}
 		});
 		$stateProvider.state({
 			name: "root.permits.preview",

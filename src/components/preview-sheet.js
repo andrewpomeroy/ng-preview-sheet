@@ -29,7 +29,7 @@ function PreviewSheetCtrl($scope, $attrs, $state, $timeout, $window, $mdDialog) 
 	};
 
 	$ctrl.$postLink = function () {
-		// Default to visible
+		// Default clickOutsideToClose to true
 		if (!$attrs.clickOutsideToClose) {
 			$ctrl.clickOutsideToClose = true;
 		}
