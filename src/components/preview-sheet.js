@@ -4,7 +4,8 @@ const previewSheet = {
 	bindings: {
 		itemId: "<",
 		previewItem: "<",
-		clickOutsideToClose: "<"
+		clickOutsideToClose: "<",
+		outerCtrl: "<"
 	},
 	require: {
 		previewContext: "?^",
@@ -56,7 +57,7 @@ function PreviewSheetCtrl($scope, $element, $attrs, $state, $timeout, $window, $
 				"itemId",
 				"previewItem",
 				"link",
-				"$state",
+				"$outerCtrl",
 				// "openEvent",
 				function PreviewSheetInnerCtrl(
 					$scope,
@@ -66,10 +67,11 @@ function PreviewSheetCtrl($scope, $element, $attrs, $state, $timeout, $window, $
 					itemId,
 					previewItem,
 					link,
-					$state
+					$outerCtrl,
 					// openEvent
 				) {
 					var $previewSheetCtrl = this;
+					$scope.$ctrl = $outerCtrl;
 					$previewSheetCtrl.itemId = itemId;
 
 					$previewSheetCtrl.cancel = function() {
@@ -103,6 +105,7 @@ function PreviewSheetCtrl($scope, $element, $attrs, $state, $timeout, $window, $
 				clickOutsideToClose: $ctrl.clickOutsideToClose,
 				link: $ctrl.link,
 				previewItem: $ctrl.previewItem,
+				$outerCtrl: $ctrl.outerCtrl
 				// openEvent: $ctrl.openEvent,
 			},
 			// onRemoving: function () {

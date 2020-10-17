@@ -9,7 +9,8 @@ const permitSummary = {
 	require: {
 		// previewContext: "?^",
 	},
-	template: template
+	template: template,
+	controller: PermitSummaryCtrl
 };
 
 PermitSummaryCtrl.$inject = [];
