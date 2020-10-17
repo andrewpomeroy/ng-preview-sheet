@@ -1,0 +1,9 @@
+<button ui-sref="root.preview({previewItemId: 4})">Preview</button>
+
+<ul>
+  <li ng-repeat="permit in data">
+    <a ui-sref=".preview({previewItemId: permit.id})">{{permit.id}}</a>
+  </li>
+</ul>
+
+<div ui-view></div>

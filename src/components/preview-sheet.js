@@ -35,7 +35,6 @@ function PreviewSheetCtrl($scope, $attrs, $state, $timeout, $window, $mdDialog) 
 		}
 	};
 
-
 	$scope.$watch("$ctrl.itemId", function (newValue, oldValue) {
 		console.log("newValue", newValue);
 		$mdDialog.show({
@@ -55,7 +54,7 @@ function PreviewSheetCtrl($scope, $attrs, $state, $timeout, $window, $mdDialog) 
 				) {
 					var $ctrl = this;
 					$ctrl.itemId = itemId;
-					
+
 					$ctrl.cancel = function() {
 						$mdDialog.cancel();
 					};
