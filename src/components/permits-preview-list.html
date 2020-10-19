@@ -1,0 +1,9 @@
+<!-- <ul ng-if="$ctrl.previewListContext.list"> -->
+<ul>
+  <li ng-repeat="permit in $ctrl.list">
+    <a ui-sref=".preview({previewItemId: permit.id})">{{permit.id}}</a>
+  </li>
+</ul>
+
+<!-- Preview sheet dialog container -->
+<div ui-view></div>

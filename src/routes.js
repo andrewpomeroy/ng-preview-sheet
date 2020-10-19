@@ -1,6 +1,4 @@
 import angular from "angular";
-import permitsTemplate from "./permits.html";
-import permitsController from "./permitsController";
 
 angular.module("app").config(["$stateProvider",
 	function ($stateProvider) {
@@ -8,26 +6,44 @@ angular.module("app").config(["$stateProvider",
 			name: "root",
 			url: "/",
 			template: "<div ui-view></div>",
-			redirectTo: "root.permits"
+			redirectTo: "root.permits.list"
 		});
 		$stateProvider.state({
 			name: "root.permits",
 			url: "^/permits",
-			// component: "permitPreviewList",
-			template: permitsTemplate,
-			controller: permitsController,
+			redirectTo: "root.permits.list",
+			component: "previewListContext",
+			// template: "<list-preview-context><div ui-view></div></list-preview-context>"
+			// template: "<div ui-view></div></list-preview-context>"			resolve: {
 			resolve: {
-				allPermits: ["PermitsService", function (PermitsService) {
-					return PermitsService.getList();
+				getList: ["PermitsService", function (PermitsService) {
+					console.log("PermitsService.getList", PermitsService.getList);
+					return PermitsService.getList;
 				}],
-				getPermitById: ["PermitsService", function (PermitsService) {
-					return PermitsService.getPermitById();
+				getItemById: ["PermitsService", function (PermitsService) {
+					return PermitsService.getPermitById;
 				}]
 			}
 		});
 		$stateProvider.state({
-			name: "root.permits.preview",
-			url: "^/preview/:previewItemId",
+			name: "root.permits.list",
+			url: "/list",
+			component: "permitsPreviewList",
+			// template: "<div ui-view></div>"
+			// template: permitsTemplate,
+			// controller: permitsController,
+			// resolve: {
+			// 	allPermits: ["PermitsService", function (PermitsService) {
+			// 		return PermitsService.getList();
+			// 	}],
+			// 	getPermitById: ["PermitsService", function (PermitsService) {
+			// 		return PermitsService.getPermitById();
+			// 	}]
+			// }
+		});
+		$stateProvider.state({
+			name: "root.permits.list.preview",
+			url: "/preview/:previewItemId",
 			component: "permitSummary",
 			resolve: {
 				itemId: ["$transition$", function ($transition$) {
