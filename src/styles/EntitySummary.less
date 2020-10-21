@@ -1,0 +1,54 @@
+.EntitySummary-metaTable {
+  display: table;
+  font-size: 17px;
+}
+
+.EntitySummary-metaTable-row {
+  display: table-row;
+  &:not(:last-child) > * {
+    padding-bottom: 10px;
+  }
+  .EntitySummary-meta-label, .EntitySummary-meta-value {
+    display: table-cell;
+  }
+}
+
+.EntitySummary-section {
+  &:not(:last-child) {
+    margin-bottom: 28px;
+  }
+}
+
+.EntitySummary-sectionSeparator {
+  margin-bottom: 28px;
+  border-bottom: 1px solid gainsboro;
+}
+
+.EntitySummary-sectionHeading {
+  font-size: 21px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: hsl(0,0%, 50%);
+}
+
+
+.EntitySummary-meta-label {
+  font-size: .8em;
+  font-weight: 600;
+  // color: gray;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  max-width: 11em;
+  // font-weight: 600;
+  padding-right: 24px;
+  color: hsl(0,0%, 50%);
+}
+.EntitySummary-meta-value {
+  font-weight: 600;
+  color: hsl(0,0%,30%);
+}
+.EntitySummary-meta-valueGroup {
+  > *:not(:last-child) {
+    margin-bottom: .125em;
+  }
+}

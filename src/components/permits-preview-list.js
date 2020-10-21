@@ -8,27 +8,26 @@ const permitsPreviewList = {
 	controller: PermitsPreviewListCtrl
 };
 
-PermitsPreviewListCtrl.$inject = [];
+PermitsPreviewListCtrl.$inject = ["$scope"];
 
-function PermitsPreviewListCtrl() {
+function PermitsPreviewListCtrl($scope) {
 	var $ctrl = this;
 
 	$ctrl.$onInit = function () {
-		$ctrl.previewListContext.getList();
+		$ctrl.previewListContext.getList().then(function (results) {
+			// console.log(results);
+			// $ctrl.list = results;
+		});
 	};
 
-	// It's nice to use `$ctrl.list` as shorthand, this just keeps its values in sync with `$ctrl.previewListContext.list`.
-	$ctrl.$doCheck = function () {
-		$ctrl.list = $ctrl.previewListContext.list;
-	};
-
-	Object.defineProperties($ctrl, {
-		// list: {
-		// 	get: function getter() {
-		// 		return $ctrl.previewListContext.list;
-		// 	},
-		// }
+	$scope.$watch(function () {
+		// passing in a function instead of a string to $watch just allows us to watch properties that aren't on `$scope`
+		return $ctrl.previewListContext.list;
+	}, function (newVal, oldVal) { 
+		console.log("watcher says", newVal, oldVal);
 	});
+
+	
 
 }
 

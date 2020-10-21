@@ -3,6 +3,10 @@
   border-radius: 5px;
 }
 
+.FloatCard {
+  width: 100%;
+}
+
 .FloatCard-header-split {
   display: flex;
 }
@@ -16,7 +20,7 @@
 }
 
 .FloatCard-header {
-  padding: 20px 28px;
+  padding: 20px 36px;
 }
 
 .FloatCard-heading {
@@ -31,13 +35,23 @@
   letter-spacing: .03em;
 }
 
+.FloatCard-body {
+  padding-top: 32px;
+  padding-bottom: 40px;
+}
+
 .FloatCard-body-segment {
-  margin: 24px 0;
+  &:not(:first-child) {
+    padding-top: 32px;
+  }
+  &:not(:last-child) {
+    padding-bottom: 32px;
+  }
 }
 
 .FloatCard-body-segment--padded {
-  padding-left: 28px;
-  padding-right: 28px;
+  padding-left: 36px;
+  padding-right: 36px;
 }
 
 .FloatCard-header--bordered {
@@ -45,7 +59,7 @@
 }
 
 .FloatCard-actions {
-  padding: 20px 28px;
+  padding: 20px 36px;
 }
 
 .FloatCard-actions--bordered {
