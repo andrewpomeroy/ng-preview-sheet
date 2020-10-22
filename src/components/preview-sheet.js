@@ -8,7 +8,7 @@ const previewSheet = {
 		outerCtrl: "<"
 	},
 	require: {
-		previewContext: "?^",
+		previewListContext: "?^",
 	},
 	controller: PreviewSheetCtrl,
 	// transclude: true
