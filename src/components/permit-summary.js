@@ -4,20 +4,36 @@ import template from "./permit-summary.html";
 const permitSummary = {
 	bindings: {
 		itemId: "<",
-		previewItem: "<"
+		// previewItem: "<"
 		// clickOutsideToClose: "<"
 	},
 	require: {
-		// previewContext: "?^",
+		previewListContext: "^",
 	},
 	template: template,
 	controller: PermitSummaryCtrl
 };
 
-PermitSummaryCtrl.$inject = [];
+PermitSummaryCtrl.$inject = ["$stateParams", "$scope"];
 
-function PermitSummaryCtrl() {
+function PermitSummaryCtrl($stateParams, $scope) {
 	var $ctrl = this;
+
+	$ctrl.$onChanges = function (changes) {
+		if (changes.itemId) {
+			console.log($ctrl.previewListContext.previewItem);
+			// $ctrl.previewListContext.previewItem.fetch(changes.itemId.currentValue).then(function () {
+			$ctrl.previewListContext.dispatch({type: "GET_ITEM", payload: changes.itemId.currentValue});
+		}
+	};
+
+	$scope.$watch(function () {
+		// passing in a function instead of a string to $watch just allows us to watch properties that aren't on `$scope`
+		return $ctrl.previewListContext.previewItem.data;
+	}, function (newVal, oldVal) {
+		$ctrl.previewItem = newVal;
+		console.log("item watcher says", newVal, oldVal);
+	});
 
 	$ctrl.isExpired = function () {
 		return $ctrl.previewItem && $ctrl.previewItem.expirationDate && moment($ctrl.previewItem.expirationDate).isBefore(moment().add("day", 1).set("hour", 0).set("minute", 0).set("second", 0).set("millisecond", 0));

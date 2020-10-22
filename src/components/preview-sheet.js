@@ -34,7 +34,7 @@ function PreviewSheetCtrl($scope, $element, $attrs, $state, $timeout, $window, $
 	$ctrl.link = $compile($element.children());
 
 	$ctrl.$onInit = function () {
-		console.log($ctrl.previewItem);
+		// console.log($ctrl.previewItem);
 	};
 
 	$ctrl.$postLink = function () {

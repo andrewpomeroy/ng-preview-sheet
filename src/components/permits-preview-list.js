@@ -14,17 +14,14 @@ function PermitsPreviewListCtrl($scope) {
 	var $ctrl = this;
 
 	$ctrl.$onInit = function () {
-		$ctrl.previewListContext.getList().then(function (results) {
-			// console.log(results);
-			// $ctrl.list = results;
-		});
+		$ctrl.previewListContext.dispatch({type: "GET_LIST"});
 	};
 
 	$scope.$watch(function () {
 		// passing in a function instead of a string to $watch just allows us to watch properties that aren't on `$scope`
-		return $ctrl.previewListContext.list;
+		return $ctrl.previewListContext.list.data;
 	}, function (newVal, oldVal) { 
-		console.log("watcher says", newVal, oldVal);
+		console.log("list watcher says", newVal, oldVal);
 	});
 
 	
