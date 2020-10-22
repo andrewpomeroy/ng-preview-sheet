@@ -15,26 +15,28 @@ PreviewListContextCtrl.$inject = ["$scope", "$q"];
 
 function PreviewListContextCtrl($scope, $q) {
 	var $ctrl = this;
-	
-	$ctrl.list = {
-		status: "idle",
-		// lastQuery: {},
-		data: [],
-		fetch: getList
-	};
 
-	$ctrl.previewItem = {
-		status: "idle",
-		// lastQuery: {},
-		data: {},
-		fetch: getItem
+	$ctrl.$onInit = function () {
+		$ctrl.list = {
+			status: "idle",
+			// lastQuery: {},
+			data: [],
+			fetch: getList
+		};
+	
+		$ctrl.previewItem = {
+			status: "idle",
+			// lastQuery: {},
+			data: {},
+			fetch: getItem
+		};
 	};
+	
 
 	$ctrl.dispatch = function (action) {
 		switch (action.type) {
 		case "GET_LIST":
 			$ctrl.list.fetch(action.payload).then(function(result) {
-				console.log();
 				$ctrl.list.data = result;
 			})
 				.catch(function (error) {
@@ -43,7 +45,6 @@ function PreviewListContextCtrl($scope, $q) {
 			break;
 		case "GET_ITEM":
 			$ctrl.previewItem.fetch(action.payload).then(function (result) {
-				console.log(result);
 				$ctrl.previewItem.data = result;
 			})
 				.catch(function (error) {
@@ -82,15 +83,24 @@ function PreviewListContextCtrl($scope, $q) {
 	function getItem (id) {
 		var deferred = $q.defer();
 		$ctrl.previewItem.status = "loading";
-		if (!$ctrl.getItem || !$ctrl.list.length || _getItem(id)) {
-			getList().then(function () {
+		if (
+			// If there's not a custom fetch-item function defined for this context instance, we'll just hitch onto the getList function (or dig through the existing list if it's already been populated)
+			!$ctrl.getItem 
+		) {
+			if (!_getItem(id)) {
+				getList().then(function () {
+					$ctrl.previewItem.status = "complete";
+					deferred.resolve(_getItem(id));
+				})
+					.catch(function (error) {
+						$ctrl.previewItem.status = "error";
+						deferred.reject(error);
+					});
+			}
+			else {
 				$ctrl.previewItem.status = "complete";
 				deferred.resolve(_getItem(id));
-			})
-				.catch(function (error) {
-					$ctrl.previewItem.status = "error";
-					deferred.reject(error);
-				});
+			}
 		}
 		else {
 			$ctrl.getItem(id).then(function (result) {
@@ -111,9 +121,6 @@ function PreviewListContextCtrl($scope, $q) {
 			return item.id === id;
 		});
 	}
-
-	$ctrl.$onInit = function () {
-	};
 
 }
 export default previewListContext;

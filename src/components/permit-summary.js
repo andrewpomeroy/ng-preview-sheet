@@ -21,7 +21,6 @@ function PermitSummaryCtrl($stateParams, $scope) {
 
 	$ctrl.$onChanges = function (changes) {
 		if (changes.itemId) {
-			console.log($ctrl.previewListContext.previewItem);
 			// $ctrl.previewListContext.previewItem.fetch(changes.itemId.currentValue).then(function () {
 			$ctrl.previewListContext.dispatch({type: "GET_ITEM", payload: changes.itemId.currentValue});
 		}
@@ -31,8 +30,9 @@ function PermitSummaryCtrl($stateParams, $scope) {
 		// passing in a function instead of a string to $watch just allows us to watch properties that aren't on `$scope`
 		return $ctrl.previewListContext.previewItem.data;
 	}, function (newVal, oldVal) {
-		$ctrl.previewItem = newVal;
-		console.log("item watcher says", newVal, oldVal);
+		if (newVal) {
+			$ctrl.previewItem = newVal;
+		}
 	});
 
 	$ctrl.isExpired = function () {

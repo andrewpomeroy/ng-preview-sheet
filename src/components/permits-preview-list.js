@@ -21,7 +21,7 @@ function PermitsPreviewListCtrl($scope) {
 		// passing in a function instead of a string to $watch just allows us to watch properties that aren't on `$scope`
 		return $ctrl.previewListContext.list.data;
 	}, function (newVal, oldVal) { 
-		console.log("list watcher says", newVal, oldVal);
+		// console.log("list watcher says", newVal, oldVal);
 	});
 
 	

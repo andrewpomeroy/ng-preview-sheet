@@ -3,145 +3,157 @@
   preview-item="$ctrl.previewItem"
   outer-ctrl="$ctrl"
 >
-  <div class="FloatCard FloatCard-fillWidth">
-    <div class="FloatCard-header FloatCard-header--bordered">
-      <div class="FloatCard-header-split">
-        <div
-          class="FloatCard-header-split-item FloatCard-header-split-item--fill"
-        >
-          <div class="FloatCard-subheading">Permit</div>
-          <div class="FloatCard-heading">{{$ctrl.previewItem.id}}</div>
+  <!-- Everything just goes a bit smoother if the child of preview-sheet is just a single div that doesn't render conditionally. There's some weird transclusion stuff that has to happen at initialization time, so this is your best bet to prevent content going missing. -->
+  <div>
+    <div
+      class="FloatCard FloatCard-fillWidth"
+      ng-if="$ctrl.previewListContext.previewItem.status === 'loading'"
+    >
+      <div class="FloatCard-body">loading</div>
+    </div>
+    <div
+      class="FloatCard FloatCard-fillWidth"
+      ng-if="$ctrl.previewListContext.previewItem.status !== 'loading'"
+    >
+      <div class="FloatCard-header FloatCard-header--bordered">
+        <div class="FloatCard-header-split">
+          <div
+            class="FloatCard-header-split-item FloatCard-header-split-item--fill"
+          >
+            <div class="FloatCard-subheading">Permit</div>
+            <div class="FloatCard-heading">{{$ctrl.previewItem.id}}</div>
+          </div>
+          <div class="FloatCard-header-split-item">
+            <button ng-click="$previewSheetCtrl.cancel($event)">
+              <svg
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px"
+                y="0px"
+                width="24px"
+                height="24px"
+                viewBox="0 0 24 24"
+                enable-background="new 0 0 24 24"
+                xml:space="preserve"
+                stroke="currentColor"
+                class="icon"
+              >
+                <g>
+                  <g>
+                    <line
+                      fill="none"
+                      stroke="inherit"
+                      stroke-width="6"
+                      stroke-miterlimit="10"
+                      x1="21.5"
+                      y1="21.5"
+                      x2="2.5"
+                      y2="2.5"
+                    />
+                  </g>
+                  <g>
+                    <line
+                      fill="none"
+                      stroke="inherit"
+                      stroke-width="6"
+                      stroke-miterlimit="10"
+                      x1="2.5"
+                      y1="21.5"
+                      x2="21.5"
+                      y2="2.5"
+                    />
+                  </g>
+                </g>
+              </svg>
+            </button>
+          </div>
         </div>
-        <div class="FloatCard-header-split-item">
-          <button ng-click="$previewSheetCtrl.cancel($event)">
-            <svg
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              x="0px"
-              y="0px"
-              width="24px"
-              height="24px"
-              viewBox="0 0 24 24"
-              enable-background="new 0 0 24 24"
-              xml:space="preserve"
-              stroke="currentColor"
-              class="icon"
-            >
-              <g>
-                <g>
-                  <line
-                    fill="none"
-                    stroke="inherit"
-                    stroke-width="6"
-                    stroke-miterlimit="10"
-                    x1="21.5"
-                    y1="21.5"
-                    x2="2.5"
-                    y2="2.5"
-                  />
-                </g>
-                <g>
-                  <line
-                    fill="none"
-                    stroke="inherit"
-                    stroke-width="6"
-                    stroke-miterlimit="10"
-                    x1="2.5"
-                    y1="21.5"
-                    x2="21.5"
-                    y2="2.5"
-                  />
-                </g>
-              </g>
-            </svg>
+      </div>
+      <div class="FloatCard-body">
+        <div class="FloatCard-body-segment FloatCard-body-segment--padded">
+          <div class="EntitySummary">
+            <div class="EntitySummary-section">
+              <div class="EntitySummary-metaTable">
+                <div class="EntitySummary-metaTable-row">
+                  <div class="EntitySummary-meta-label">Permit Number</div>
+                  <div class="EntitySummary-meta-value">
+                    {{$ctrl.previewItem.id}}
+                  </div>
+                </div>
+                <div class="EntitySummary-metaTable-row">
+                  <div class="EntitySummary-meta-label">Permit Category</div>
+                  <div class="EntitySummary-meta-value">
+                    {{$ctrl.previewItem.permitCategoryDescription}}
+                  </div>
+                </div>
+                <div class="EntitySummary-metaTable-row">
+                  <div class="EntitySummary-meta-label">Issued on</div>
+                  <div class="EntitySummary-meta-value">
+                    {{$ctrl.previewItem.effectiveDate | date: 'shortDate'}}
+                  </div>
+                </div>
+                <div class="EntitySummary-metaTable-row">
+                  <div class="EntitySummary-meta-label">
+                    {{$ctrl.isExpired() ? "Expired " : "Expires " }}on
+                  </div>
+                  <div
+                    class="EntitySummary-meta-value"
+                    ng-if="!$ctrl.isExpired()"
+                  >
+                    {{$ctrl.previewItem.expirationDate | date: 'shortDate'}}
+                  </div>
+                  <div
+                    class="EntitySummary-meta-value"
+                    ng-if="$ctrl.isExpired()"
+                    style="color: red"
+                  >
+                    {{$ctrl.previewItem.expirationDate | date: 'shortDate'}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="EntitySummary-sectionSeparator"></div> -->
+            <div class="EntitySummary-section">
+              <div class="EntitySummary-sectionHeading">Permittee</div>
+              <div class="EntitySummary-meta-valueGroup">
+                <div class="EntitySummary-meta-value">
+                  {{$ctrl.previewItem.permittee}}
+                </div>
+                <div class="EntitySummary-meta-value">
+                  {{$ctrl.previewItem.permitteeAddress1}}
+                </div>
+                <div class="EntitySummary-meta-value">
+                  {{$ctrl.previewItem.permitteeCity}},<span> </span>
+                  {{$ctrl.previewItem.permitteeStateId}} {{permitteeZipCode}}
+                </div>
+              </div>
+            </div>
+            <!-- <div class="EntitySummary-sectionSeparator"></div> -->
+            <div class="EntitySummary-section">
+              <div class="EntitySummary-sectionHeading">Agency Contact</div>
+              <div class="EntitySummary-meta-valueGroup">
+                <div class="EntitySummary-meta-value">
+                  {{$ctrl.previewItem.agencyContactName}}
+                </div>
+                <div class="EntitySummary-meta-value">
+                  {{$ctrl.previewItem.agencyContactEmail}}
+                </div>
+                <div class="EntitySummary-meta-value">
+                  {{$ctrl.previewItem.agencyContactPhone}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="FloatCard-actions FloatCard-actions--bordered">
+        <div class="FloatCard-action">
+          <button class="btn btn-default" ng-click="$previewSheetCtrl.cancel()">
+            Close
           </button>
         </div>
-      </div>
+      </div> -->
     </div>
-    <div class="FloatCard-body">
-      <div class="FloatCard-body-segment FloatCard-body-segment--padded">
-        <div class="EntitySummary">
-          <div class="EntitySummary-section">
-            <div class="EntitySummary-metaTable">
-              <div class="EntitySummary-metaTable-row">
-                <div class="EntitySummary-meta-label">Permit Number</div>
-                <div class="EntitySummary-meta-value">
-                  {{$ctrl.previewItem.id}}
-                </div>
-              </div>
-              <div class="EntitySummary-metaTable-row">
-                <div class="EntitySummary-meta-label">Permit Category</div>
-                <div class="EntitySummary-meta-value">
-                  {{$ctrl.previewItem.permitCategoryDescription}}
-                </div>
-              </div>
-              <div class="EntitySummary-metaTable-row">
-                <div class="EntitySummary-meta-label">Issued on</div>
-                <div class="EntitySummary-meta-value">
-                  {{$ctrl.previewItem.effectiveDate | date: 'shortDate'}}
-                </div>
-              </div>
-              <div class="EntitySummary-metaTable-row">
-                <div class="EntitySummary-meta-label">
-                  {{$ctrl.isExpired() ? "Expired " : "Expires " }}on
-                </div>
-                <div
-                  class="EntitySummary-meta-value"
-                  ng-if="!$ctrl.isExpired()"
-                >
-                  {{$ctrl.previewItem.expirationDate | date: 'shortDate'}}
-                </div>
-                <div
-                  class="EntitySummary-meta-value"
-                  ng-if="$ctrl.isExpired()"
-                  style="color: red"
-                >
-                  {{$ctrl.previewItem.expirationDate | date: 'shortDate'}}
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- <div class="EntitySummary-sectionSeparator"></div> -->
-          <div class="EntitySummary-section">
-            <div class="EntitySummary-sectionHeading">Permittee</div>
-            <div class="EntitySummary-meta-valueGroup">
-              <div class="EntitySummary-meta-value">
-                {{$ctrl.previewItem.permittee}}
-              </div>
-              <div class="EntitySummary-meta-value">
-                {{$ctrl.previewItem.permitteeAddress1}}
-              </div>
-              <div class="EntitySummary-meta-value">
-                {{$ctrl.previewItem.permitteeCity}},<span> </span>
-                {{$ctrl.previewItem.permitteeStateId}} {{permitteeZipCode}}
-              </div>
-            </div>
-          </div>
-          <!-- <div class="EntitySummary-sectionSeparator"></div> -->
-          <div class="EntitySummary-section">
-            <div class="EntitySummary-sectionHeading">Agency Contact</div>
-            <div class="EntitySummary-meta-valueGroup">
-              <div class="EntitySummary-meta-value">
-                {{$ctrl.previewItem.agencyContactName}}
-              </div>
-              <div class="EntitySummary-meta-value">
-                {{$ctrl.previewItem.agencyContactEmail}}
-              </div>
-              <div class="EntitySummary-meta-value">
-                {{$ctrl.previewItem.agencyContactPhone}}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- <div class="FloatCard-actions FloatCard-actions--bordered">
-      <div class="FloatCard-action">
-        <button class="btn btn-default" ng-click="$previewSheetCtrl.cancel()">
-          Close
-        </button>
-      </div>
-    </div> -->
   </div>
 </preview-sheet>

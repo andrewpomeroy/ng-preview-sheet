@@ -46,7 +46,6 @@ function PreviewSheetCtrl($scope, $element, $attrs, $state, $timeout, $window, $
 	};
 
 	$scope.$watch("$ctrl.itemId", function (newValue, oldValue) {
-		console.log("newValue", newValue);
 		$mdDialog.show({
 			parent: $window.angular.element(document.body),
 			controller: [

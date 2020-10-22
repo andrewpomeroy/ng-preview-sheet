@@ -1,5 +1,6 @@
 <!-- <ul ng-if="$ctrl.previewListContext.list"> -->
-<ul>
+<div ng-if="$ctrl.previewListContext.list.status === 'loading'">loading</div>
+<ul ng-if="$ctrl.previewListContext.list.status === 'complete'">
   <li ng-repeat="permit in $ctrl.previewListContext.list.data">
     <a ui-sref=".preview({previewItemId: permit.id})">{{permit.id}}</a>
   </li>
