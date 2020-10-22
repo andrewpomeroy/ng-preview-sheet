@@ -1,4 +1,3 @@
-import template from "./preview-list-context.html";
 
 var previewListContext = {
 	bindings: {
@@ -8,12 +7,12 @@ var previewListContext = {
 		getItem: "<"
 	},
 	controller: PreviewListContextCtrl,
-	template: template,
+	template: "<div ui-view></div>"
 };
 
-PreviewListContextCtrl.$inject = ["$scope", "$q"];
+PreviewListContextCtrl.$inject = ["$scope", "$state", "$q"];
 
-function PreviewListContextCtrl($scope, $q) {
+function PreviewListContextCtrl($scope, $state, $q) {
 	var $ctrl = this;
 
 	$ctrl.$onInit = function () {
@@ -54,9 +53,13 @@ function PreviewListContextCtrl($scope, $q) {
 		case "SELECT_ITEM":
 			$ctrl.selectedItemId = action.payload;
 			break;
+		case "CLOSE_PREVIEW":
+			$state.go("^");
+			break;
 		default:
 			break;
 		}
+			
 	};
 
 	function getList (queryParams) {

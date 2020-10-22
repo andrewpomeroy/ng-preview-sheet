@@ -31,7 +31,7 @@ function PreviewSheetCtrl($scope, $element, $attrs, $state, $timeout, $window, $
 		$mdDialog.hide("destroyed");
 	};
 
-	$ctrl.link = $compile($element.children());
+	$ctrl.innerTemplate = $element.children();
 
 	$ctrl.$onInit = function () {
 		// console.log($ctrl.previewItem);
@@ -55,7 +55,7 @@ function PreviewSheetCtrl($scope, $element, $attrs, $state, $timeout, $window, $
 				"clickOutsideToClose",
 				"itemId",
 				"previewItem",
-				"link",
+				"innerTemplate",
 				"$outerCtrl",
 				// "openEvent",
 				function PreviewSheetInnerCtrl(
@@ -65,12 +65,13 @@ function PreviewSheetCtrl($scope, $element, $attrs, $state, $timeout, $window, $
 					clickOutsideToClose,
 					itemId,
 					previewItem,
-					link,
+					innerTemplate,
 					$outerCtrl,
 					// openEvent
 				) {
 					var $previewSheetCtrl = this;
 					$scope.$ctrl = $outerCtrl;
+					$scope.$previewSheetCtrl = $previewSheetCtrl;
 					$previewSheetCtrl.itemId = itemId;
 
 					$previewSheetCtrl.cancel = function() {
@@ -84,7 +85,7 @@ function PreviewSheetCtrl($scope, $element, $attrs, $state, $timeout, $window, $
 
 					$previewSheetCtrl.$onInit = function () {
 						var target = $element.find("transclude-target");
-						target.append(link($scope));
+						target.append($compile(innerTemplate)($scope))
 					};
 
 					$previewSheetCtrl.stopProp = function (e) {
@@ -102,9 +103,9 @@ function PreviewSheetCtrl($scope, $element, $attrs, $state, $timeout, $window, $
 			locals: {
 				itemId: $ctrl.itemId,
 				clickOutsideToClose: $ctrl.clickOutsideToClose,
-				link: $ctrl.link,
 				previewItem: $ctrl.previewItem,
-				$outerCtrl: $ctrl.outerCtrl
+				$outerCtrl: $ctrl.outerCtrl,
+				innerTemplate: $ctrl.innerTemplate,
 				// openEvent: $ctrl.openEvent,
 			},
 			// onRemoving: function () {

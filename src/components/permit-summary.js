@@ -14,9 +14,9 @@ const permitSummary = {
 	controller: PermitSummaryCtrl
 };
 
-PermitSummaryCtrl.$inject = ["$stateParams", "$scope"];
+PermitSummaryCtrl.$inject = ["$scope", "$state"];
 
-function PermitSummaryCtrl($stateParams, $scope) {
+function PermitSummaryCtrl($scope, $state) {
 	var $ctrl = this;
 
 	$ctrl.$onChanges = function (changes) {
@@ -37,6 +37,9 @@ function PermitSummaryCtrl($stateParams, $scope) {
 
 	$ctrl.isExpired = function () {
 		return $ctrl.previewItem && $ctrl.previewItem.expirationDate && moment($ctrl.previewItem.expirationDate).isBefore(moment().add("day", 1).set("hour", 0).set("minute", 0).set("second", 0).set("millisecond", 0));
+	};
+
+	$ctrl.$postLink = function () {
 	};
 
 }
