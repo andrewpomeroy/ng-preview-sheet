@@ -50,12 +50,9 @@ function PreviewListContextCtrl($scope, $state, $q) {
 					console.error(error);
 				});		
 			break;
-		case "SELECT_ITEM":
-			$ctrl.selectedItemId = action.payload;
-			break;
-		case "CLOSE_PREVIEW":
-			$state.go("^");
-			break;
+		// case "SELECT_ITEM":
+		// 	$ctrl.selectedItemId = action.payload;
+		// 	break;
 		default:
 			break;
 		}
@@ -69,9 +66,6 @@ function PreviewListContextCtrl($scope, $state, $q) {
 			.then(function (result) {
 				$ctrl.list.status = "complete";
 				var list = result;
-				// if (queryParams && queryParams.filter) {
-				// 	list = list.filter(queryParams.filter);
-				// }
 				$ctrl.list.data = list;
 				deferred.resolve(list);
 			})
