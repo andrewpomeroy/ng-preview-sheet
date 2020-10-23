@@ -17,12 +17,12 @@ function PermitsPreviewListCtrl($scope) {
 		$ctrl.previewListContext.dispatch({type: "GET_LIST"});
 	};
 
-	$scope.$watch(function () {
-		// passing in a function instead of a string to $watch just allows us to watch properties that aren't on `$scope`
-		return $ctrl.previewListContext.list.data;
-	}, function (newVal, oldVal) { 
-		// console.log("list watcher says", newVal, oldVal);
-	});
+	// $scope.$watch(function () {
+	// 	// passing in a function instead of a string to $watch just allows us to watch properties that aren't on `$scope`
+	// 	return $ctrl.previewListContext.list.data;
+	// }, function (newVal, oldVal) { 
+	// 	// console.log("list watcher says", newVal, oldVal);
+	// });
 
 	
 

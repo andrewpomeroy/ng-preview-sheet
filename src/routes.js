@@ -28,6 +28,7 @@ angular.module("app").config(["$stateProvider",
 			name: "root.permits.list.preview",
 			url: "/preview/:previewItemId",
 			component: "permitSummary",
+			
 			resolve: {
 				itemId: ["$transition$", function ($transition$) {
 					return $transition$.params().previewItemId;
@@ -39,5 +40,6 @@ angular.module("app").config(["$stateProvider",
 				// }],
 			}
 		});
+		
 	}
 ]);
