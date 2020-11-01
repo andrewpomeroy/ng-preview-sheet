@@ -1046,6 +1046,7 @@ function PermitsService ($q) {
 			"permitteeCity": faker.address.city(),
 			"permitteeStateId": faker.address.stateAbbr(),
 			"permitteeZipCode": faker.address.zipCode(),
+			documents: makeDocuments()
 		}
 		const status = statuses[Math.floor(Math.random() * statuses.length)]
 		const permitType = permitTypes[Math.floor(Math.random() * permitTypes.length)]
@@ -1057,6 +1058,18 @@ function PermitsService ($q) {
 	}
 
 	function getFakePermits () {return [...Array(50).keys()].map(makeFakeItem);}
+
+	function makeDocument () {
+		return {
+			documentName: faker.commerce.productName(),
+			description: faker.lorem.sentence(),
+			documentReceivedCreatedDate: faker.date.past()
+		}
+	}
+
+	function makeDocuments () {
+		return [...Array(Math.floor(Math.random() * 4) + 1).keys()].map(makeDocument)
+	}
 
 	function fetchPermits () {
 		var deferred = $q.defer();
