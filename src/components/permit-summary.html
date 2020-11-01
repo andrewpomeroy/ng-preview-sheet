@@ -154,42 +154,9 @@
                   >{{$ctrl.previewItem.documents.length}}</span
                 >
               </div>
-              <ul class="FlatList FlatList--lined FlatList--noPaddingV">
-                <li
-                  class="FlatList-item FlatList-item--lined FlatList-item--linked"
-                  ng-repeat="document in $ctrl.previewItem.documents"
-                >
-                  <div class="FlatList-item-split">
-                    <div
-                      class="FlatList-item-split-child FlatList-item-split-child--fill"
-                    >
-                      <div>
-                        <div class="FlatList-item-line">
-                          <div class="FlatList-item-title">
-                            {{document.documentName}}
-                          </div>
-                        </div>
-                        <div
-                          class="FlatList-item-line"
-                          ng-if="document.description.length"
-                        >
-                          <div
-                            class="FlatList-item-description FlatList-item-description--ellipsis"
-                          >
-                            {{document.description}}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- <div class="FlatList-item-split-child">
-                    {{document.documentContentSize}}
-                  </div> -->
-                  <div class="FlatList-item-split-child">
-                    {{document.documentReceivedCreatedDate | date:"short"}}
-                  </div>
-                </li>
-              </ul>
+              <summary-documents-list
+                documents="$ctrl.previewItem.documents"
+              ></summary-documents-list>
             </div>
           </div>
         </div>
