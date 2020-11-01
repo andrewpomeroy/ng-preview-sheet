@@ -10,6 +10,16 @@ body {
 
 @import './mdDialog.less';
 
+.CloseXWrap {
+  border: 0;
+  background: none;
+  padding: 10px;
+  margin: -10px;
+  &:hover, &:focus {
+    outline: 0;
+    color: @color-highlight;
+  }
+}
 @import './PreviewSheet.less';
 @import './FloatCard.less';
 @import './EntitySummary.less';
